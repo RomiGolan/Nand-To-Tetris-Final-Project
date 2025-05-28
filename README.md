@@ -1,4 +1,6 @@
 # TOFESET – Final Project for Nand2Tetris
+<img src="GameScreen01.png" alt="Game Screenshot" width="30%"/>
+
 
 Two-player tag game developed as the final project for the Nand2Tetris course.
 ---
@@ -18,7 +20,7 @@ Developed by **Romi Golan** and **Ruth Steinberg**.
 - `Player1.jack` – Controls Player 1.
 - `Player2.jack` – Controls Player 2.
 
-## 🖥️ Technical Highlights
+## Technical Highlights
 
 - Written in Jack language for the Hack platform
 - Uses low-level screen and memory manipulation for visuals
@@ -27,7 +29,7 @@ Developed by **Romi Golan** and **Ruth Steinberg**.
 
 ## How to Run
 
-1. Open the Nand2Tetris IDE.
+1. Open the Nand2Tetris [IDE](https://nand2tetris.github.io/web-ide/compiler). 
 2. Load all `.jack` files.
 3. Compile.
 4. Run `Main.jack`.
