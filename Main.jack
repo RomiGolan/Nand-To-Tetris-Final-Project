@@ -1,0 +1,14 @@
+/** Initializes a new TOFESET game and starts running it. */
+class Main {
+    field Player1 player1;
+    field Player2 player2;
+
+    function void main() {
+        var GameOn game;
+        let game = GameOn.new(); 
+        do game.actualGame();
+        do game.dispose(); 
+        return;
+    }
+    
+}

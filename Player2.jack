@@ -1,0 +1,154 @@
+class Player2 {
+field int x, y; // screen location of player
+   field int size; // and size
+
+   /** Constructs and draws a new player with a given location and size. */
+   constructor Player2 new(int ax, int ay, int asize) {
+      let x = ax;
+      let y = ay;
+      let size = asize;
+      do drawNEW();
+      return this;
+   }
+
+   /**gets the players's position & size*/
+    method int posX() {
+        return x;
+    }
+    method int posY() {
+        return y;
+    }
+    method int sizeOf() {
+        return size;
+    }
+
+/** Disposes this player. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+
+/** draws player*/
+   method void drawNEW() {
+        var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        do Memory.poke(memAddress, -256);
+        do Memory.poke(memAddress +32, 256);
+        do Memory.poke(memAddress +64, -30464);
+        do Memory.poke(memAddress +96, -30457);
+        do Memory.poke(memAddress +128, 1289);
+        do Memory.poke(memAddress +160, -751);
+        do Memory.poke(memAddress +192, 290);
+        do Memory.poke(memAddress +224, -172);
+        do Memory.poke(memAddress +256, 136);
+        do Memory.poke(memAddress +288, 28688);
+        do Memory.poke(memAddress +320, 18464);
+        do Memory.poke(memAddress +352, 24608);
+        do Memory.poke(memAddress +384, 12320);
+        do Memory.poke(memAddress +416, -2016);
+        do Memory.poke(memAddress +448, 62);
+        do Memory.poke(memAddress +480, -126);
+        do Memory.poke(memAddress +512, 130);
+        do Memory.poke(memAddress +544, 254);
+        // column 1
+        do Memory.poke(memAddress +1, 7);
+        do Memory.poke(memAddress +33, 4);
+        do Memory.poke(memAddress +65, 4);
+        do Memory.poke(memAddress +97, 1796);
+        do Memory.poke(memAddress +129, 1157);
+        do Memory.poke(memAddress +161, 1093);
+        do Memory.poke(memAddress +193, 548);
+        do Memory.poke(memAddress +225, 343);
+        do Memory.poke(memAddress +257, 136);
+        do Memory.poke(memAddress +289, 64);
+        do Memory.poke(memAddress +321, 32);
+        do Memory.poke(memAddress +353, 32);
+        do Memory.poke(memAddress +385, 32);
+        do Memory.poke(memAddress +417, 32);
+        do Memory.poke(memAddress +449, 992);
+        do Memory.poke(memAddress +481, 527);
+        do Memory.poke(memAddress +513, 520);
+        do Memory.poke(memAddress +545, 1016);
+        return;
+    }
+
+/** erease player. */
+method void eraseNEW() {
+    var int memAddress;
+        let memAddress = 16384 + (x/16) + (y*32);
+        do Memory.poke(memAddress, 0);
+        do Memory.poke(memAddress +32, 0);
+        do Memory.poke(memAddress +64, 0);
+        do Memory.poke(memAddress +96, 0);
+        do Memory.poke(memAddress +128, 0);
+        do Memory.poke(memAddress +160, 0);
+        do Memory.poke(memAddress +192, 0);
+        do Memory.poke(memAddress +224, 0);
+        do Memory.poke(memAddress +256, 0);
+        do Memory.poke(memAddress +288, 0);
+        do Memory.poke(memAddress +320, 0);
+        do Memory.poke(memAddress +352, 0);
+        do Memory.poke(memAddress +384, 0);
+        do Memory.poke(memAddress +416, 0);
+        do Memory.poke(memAddress +448, 0);
+        do Memory.poke(memAddress +480, 0);
+        do Memory.poke(memAddress +512, 0);
+        do Memory.poke(memAddress +544, 0);
+        // column 1
+        do Memory.poke(memAddress +1, 0);
+        do Memory.poke(memAddress +33, 0);
+        do Memory.poke(memAddress +65, 0);
+        do Memory.poke(memAddress +97, 0);
+        do Memory.poke(memAddress +129, 0);
+        do Memory.poke(memAddress +161, 0);
+        do Memory.poke(memAddress +193, 0);
+        do Memory.poke(memAddress +225, 0);
+        do Memory.poke(memAddress +257, 0);
+        do Memory.poke(memAddress +289, 0);
+        do Memory.poke(memAddress +321, 0);
+        do Memory.poke(memAddress +353, 0);
+        do Memory.poke(memAddress +385, 0);
+        do Memory.poke(memAddress +417, 0);
+        do Memory.poke(memAddress +449, 0);
+        do Memory.poke(memAddress +481, 0);
+        do Memory.poke(memAddress +513, 0);
+        do Memory.poke(memAddress +545, 0);
+        return;
+    }
+
+    method void moveLeftNEW() {
+        if (x > 35) {
+            do eraseNEW();
+            let x = x - 2;
+            do drawNEW();
+        }
+        return;
+    }
+
+    method void moveRightNEW() {
+        if (x < 450) {
+            do eraseNEW();
+            let x = x + 2;
+            do drawNEW();
+        }
+        return;
+    }
+
+    method void moveUpNEW() {
+        if (y > 70) {
+            do eraseNEW();
+            let y = y - 2;
+            do drawNEW();
+        }
+        return;
+    }
+
+    method void moveDownNEW() {
+        if (y < 220) {
+            do eraseNEW();
+            let y = y + 1;
+            do drawNEW();
+        }
+        return;
+    }
+   }

@@ -1,0 +1,298 @@
+/**
+ * GameOn class.
+ * Creates a game, checks for collision, moves players, and so on.
+ */
+class GameOn {
+   field Player1 player1;
+   field Player2 player2;
+   field int direction1; // the player's current direction: 
+                        // 0=none, 1=up, 2=down, 3=left, 4=right
+   field int direction2;
+
+   /** Constructs a new game. */
+   constructor GameOn new() {
+      // The initial player1 & 2 are located in chosen locations, and not moving.
+      let player1 = Player1.new(100, 60, 20);
+      let direction1 = 0;
+      let player2 = Player2.new(415, 60, 20);
+      let direction2 = 0;
+      return this;
+   }
+
+   /** Checks if one player caught the other. */
+   method boolean checkCollision() {
+    var int p1Left, p1Right, p1Top, p1Bottom;
+    var int p2Left, p2Right, p2Top, p2Bottom;
+
+    let p1Left = player1.posX();
+    let p1Right = player1.posX() + player1.sizeOf();
+    let p1Top = player1.posY();
+    let p1Bottom = player1.posY() + player1.sizeOf();
+
+    let p2Left = player2.posX();
+    let p2Right = player2.posX() + player2.sizeOf();
+    let p2Top = player2.posY();
+    let p2Bottom = player2.posY() + player2.sizeOf();
+
+    return ~((p1Right < p2Left) | (p1Left > p2Right) | (p1Bottom < p2Top) | (p1Top > p2Bottom));
+}
+
+/** Disposes this game. */
+   method void dispose() {
+      do player1.dispose();
+      do player2.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+/** Moves players around. */
+      method void movePlayers() {
+      if (direction1 = 1) { do player2.moveUpNEW(); }
+      if (direction1 = 2) { do player2.moveDownNEW(); }
+      if (direction1 = 3) { do player2.moveLeftNEW(); }
+      if (direction1 = 4) { do player2.moveRightNEW(); }
+      if (direction2 = 5) { do player1.moveUpNEW(); }
+      if (direction2 = 6) { do player1.moveDownNEW(); }
+      if (direction2 = 7) { do player1.moveLeftNEW(); }
+      if (direction2 = 8) { do player1.moveRightNEW(); }
+      do Sys.wait(1);  // delays the next movement
+      return;
+   }
+
+/** Open screen. */
+   method void firstScreen() {
+         var boolean game_on;
+         var boolean flag;
+         var int start;
+         let flag =true;
+         let game_on = true;
+         while(flag){
+               do Output.moveCursor(1, 19);
+               do Output.printString("Welcome to 'TOFESET' GAME");
+               do Screen.drawLine(20,25,490,25); 
+               do Output.moveCursor(4, 9);
+               do Output.printString("PLAYER 1:");
+               do Output.moveCursor(8, 5);
+               do Output.printString("plays with a,w,s,d");
+               do Output.moveCursor(4, 47);
+               do Output.printString("PLAYER 2:");
+               do Output.moveCursor(8, 41);
+               do Output.printString("playes with arrows");
+               do Output.moveCursor(11, 25);
+               do Output.printString("INSTRUCTIONS:");
+               do Screen.drawLine(190,135,310,135);
+               do Output.moveCursor(13, 13);
+               do Output.printString("One player catches the other...you know");
+               do Output.moveCursor(15, 26);
+               do Output.printString("ESC to quit");
+               do Output.moveCursor(18, 10);
+               do Output.printString("Are you ready? press 1 and press ENTER to START");
+
+               do Output.moveCursor(20, 31);
+               let start = Keyboard.readInt("");
+
+               if (start = 1) {
+                  do Screen.clearScreen();
+                  do Output.moveCursor(1, 27);
+                  do Output.printString("GAME ON!");
+                  do Output.moveCursor(3, 19);
+                  do Output.printString("PLAYER 1 is the CATCHER!");
+                  do Screen.drawLine(22,50,490,50);
+                  do Screen.drawLine(22,245,490,245);
+                  do Screen.drawLine(22,50,22,245);
+                  do Screen.drawLine(490,50,490,245); 
+                  let flag = false;
+               }
+            }
+            return;
+   }
+
+   /**if they solve the riddle ...*/
+   method void ChampsScreen() {
+         var boolean game_on;
+         var boolean flag;
+         var int start;
+         let flag =true;
+         let game_on = true;
+         while(flag){
+               do Output.moveCursor(7, 20);
+               do Output.printString("YOU GUYS ARE VERY SMART"); 
+               do Output.moveCursor(10, 21);
+               do Output.printString("YOU GOT ONE LAST GAME");
+               do Output.moveCursor(18, 10);
+               do Output.printString("Are you ready? press 1 and press ENTER to START");
+
+               do Output.moveCursor(20, 31);
+               let start = Keyboard.readInt("");
+
+               if (start = 1) {
+                  do Screen.clearScreen();
+                  do Output.moveCursor(1, 27);
+                  do Output.printString("GAME ON!");
+                  do Output.moveCursor(3, 19);
+                  do Output.printString("PLAYER 1 is the CATCHER!");
+                  do Screen.drawLine(22,50,490,50);
+                  do Screen.drawLine(22,245,490,245);
+                  do Screen.drawLine(22,50,22,245);
+                  do Screen.drawLine(490,50,490,245); 
+                  let flag = false;
+               }
+            }
+            return;
+   }
+
+/** Combination of all features. */
+   method void actualGame() {
+         var int start;
+         var GameOn game;
+         var int riddle;
+         do firstScreen();
+         do run();
+         do Output.moveCursor(1, 20);
+         do Output.printString("PLAYER 1 caught PLAYER 2");
+         do Output.moveCursor(3, 18);
+         do Output.printString("now PLAYER 2 is the CATCHER!");
+         do Screen.drawLine(22,50,490,50);
+         do Screen.drawLine(22,245,490,245);
+         do Screen.drawLine(22,50,22,245);
+         do Screen.drawLine(490,50,490,245);
+         
+         do run();
+         do Screen.clearScreen();
+         do Screen.drawLine(22,50,490,50);
+         do Screen.drawLine(22,245,490,245);
+         do Screen.drawLine(22,50,22,245);
+         do Screen.drawLine(490,50,490,245);
+         do Output.moveCursor(8, 19); //addded
+         do Output.printString("Game is over - don't cry :)");
+         do Output.moveCursor(10, 23); //addded
+         do Output.printString("wanna play AGAIN?");
+         do Output.moveCursor(12, 13); //addded
+         do Output.printString("1: yes (there is no option to refuse)");
+         do Output.moveCursor(14, 32);
+         let start = Keyboard.readInt("");
+         if(start = 1) {
+            do Screen.clearScreen();
+            do Screen.drawLine(22,50,490,50);
+            do Screen.drawLine(22,245,490,245);
+            do Screen.drawLine(22,50,22,245);
+            do Screen.drawLine(490,50,490,245);
+            do Output.moveCursor(2, 13);
+            do Output.printString("if you really wanna play again...");
+            do Output.moveCursor(3, 13);
+            do Output.printString("Solve the riddle and find what key to press");
+            do Output.moveCursor(6, 13);
+            do Output.printString("THE RIDDLE:");
+            do Output.moveCursor(10, 13);
+            do Output.printString("I'm a fraction, but not in disguise,");
+            do Output.moveCursor(11, 13);
+            do Output.printString("I show you part of the whole, no lies.");
+            do Output.moveCursor(12, 13);
+            do Output.printString("In math, I'm common, but not always seen,");
+            do Output.moveCursor(13, 13);
+            do Output.printString("I make things smaller, but keep them keen.");
+            do Output.moveCursor(14, 13);
+            do Output.printString("Who am I? write my HACK number!");
+            do Output.moveCursor(20, 13);
+            let riddle = Keyboard.readInt("");
+            if(riddle = 37) { //got the riddle right
+               do Screen.clearScreen();
+               let game = GameOn.new(); 
+               do oneLastGame();
+            } 
+            else {
+               do Screen.clearScreen();
+               do Output.moveCursor(4, 30);
+               do Output.printString("WRONG!");
+               do Output.moveCursor(6, 17);
+               do Output.printString("The answer is: % (=37 in hack)");
+               do Output.moveCursor(9, 2);
+               do Output.printString("The percent symbol (%) represents a fraction,");
+               do Output.moveCursor(11, 2);
+               do Output.printString("Percentages show part of the whole.");
+               do Output.moveCursor(13, 2);
+               do Output.printString("Frequently used in mathematics, especially");
+               do Output.moveCursor(14, 2);
+               do Output.printString("in contexts like discounts, statistics, and probability,");
+               do Output.moveCursor(15, 2);
+               do Output.printString("but it might not be seen in every equation or problem.");
+               do Output.moveCursor(16, 2);
+               do Output.printString("and...percentages often reduce values.");
+               do Output.moveCursor(20, 18);
+               do Output.printString("THANK YOU FOR PLAYING! BYE!");
+            }
+         }
+         return;
+   }
+
+   method void oneLastGame() {
+         var int start;
+         var int riddle;
+         do ChampsScreen();
+         do run();
+         do Output.moveCursor(1, 20);
+         do Output.printString("PLAYER 1 caught PLAYER 2");
+         do Output.moveCursor(3, 18);
+         do Output.printString("now PLAYER 2 is the CATCHER!");
+         do Screen.drawLine(22,50,490,50);
+         do Screen.drawLine(22,245,490,245);
+         do Screen.drawLine(22,50,22,245);
+         do Screen.drawLine(490,50,490,245);
+         
+         do run();
+         do Screen.clearScreen();
+         do Screen.drawLine(22,50,490,50);
+         do Screen.drawLine(22,245,490,245);
+         do Screen.drawLine(22,50,22,245);
+         do Screen.drawLine(490,50,490,245);
+         do Output.moveCursor(8, 19); //addded
+         do Output.printString("Game is over - don't cry :)");
+         return;
+   }
+
+   /** Runs the game: handles the users's inputs and moves the players accordingly */
+   method void run() {
+      var char key1;  // the key currently pressed by the user1
+      var char key2;  // the key currently pressed by the user2
+      var boolean check;
+      var boolean exit;
+      let exit = false;
+   
+      let player1 = Player1.new(70, 100, 20);
+      let direction1 = 0;
+      let player2 = Player2.new(370, 100, 20);
+      let direction2 = 0;
+      
+      while (~exit) {
+         let key1 = Keyboard.keyPressed();
+         let key2 = Keyboard.keyPressed();
+         do movePlayers();
+
+         /*if (key1 = 140) { // ESC key
+            let exit = true;
+            return;
+         }*/     
+         if(checkCollision()) {
+            let exit = true;
+            do Screen.clearScreen();
+         }
+         //player1
+         if (key1 = 131) { let direction1 = 1; }   // up arrow
+         if (key1 = 133) { let direction1 = 2; }   // down arrow
+         if (key1 = 130) { let direction1 = 3; }   // left arrow
+         if (key1 = 132) { let direction1 = 4; }   // right arrow
+         //player2
+         if (key2 = 119) { let direction2 = 5; }   // up arrow
+         if (key2 = 115) { let direction2 = 6; }   // down arrow
+         if (key2 = 97) { let direction2 = 7; }   // left arrow
+         if (key2 = 100) { let direction2 = 8; }   // right arrow
+
+         // waits for the key to be released
+         while (~(key1 = 0) | ~(key2 = 0)) {
+            let key1 = Keyboard.keyPressed();
+            let key2 = Keyboard.keyPressed();
+            do movePlayers();
+         }
+     } // while
+     return;
+   }
+}
